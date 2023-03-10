@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All the Fishes</title>
+    <script src="https://pixijs.download/release/pixi.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1> All The fishes</h1>
+        <h3> "A juicy sweet"</h3>
+    </header>
+
+    <script>
+
+        //The App
+        let app = new PIXI.Application({
+            width: 800,
+            heigth: 450,
+            backgroundColor: 0x007799
+        }); // 16:9 * 50
+        /*
+            app.stage;
+        */
+
+        //add pixi view obj to document
+        document.body.appendChild(app.view);
+
+        let scene1BG = PIXI.Sprite.from('img/bg-two.png');
+        scene1BG.width = app.view.width;
+        scene1BG.height = app.view.height;
+        app.stage.addChild(scene1BG);
+
+        //sprites
+        let fish1 = PIXI.Sprite.from("img/fish-1.png");
+        fish1.x = 200;
+        fish1.y = 100;
+        fish1.anchor.set(.5);
+        //fish1.rotation = 45;
+        //fish1.tint = 0xffaaaa;
+        //fish1.width = 100;
+        //fish1.scale.x = 2;
+
+        app.stage.addChild(fish1);
+
+        let fish2 = PIXI.Sprite.from("img/fish-2.png");
+        fish2.x = -150;
+        fish2.y = 200;
+        fish2.scale.set(.75);
+        fish2.anchor.set(.5);
+        app.stage.addChild(fish2);
+
+        let fish3 = PIXI.Sprite.from("img/fish-3.png");
+        fish3.x = 0;
+        fish3.y = 20;
+        fish3.scale.set(.4);
+        fish3.anchor.set(.5);
+        app.stage.addChild(fish3);
+
+        let fish4 = PIXI.Sprite.from("img/fish-3.png");
+        fish4.x = 120;
+        fish4.y = 25;
+        fish4.scale.set(.4);
+        fish4.anchor.set(.5);
+        app.stage.addChild(fish4);
+
+        let fish5 = PIXI.Sprite.from("img/fish-3.png");
+        fish5.x = 70;
+        fish5.y = -45;
+        fish5.scale.set(.4);
+        fish5.anchor.set(.5);
+        app.stage.addChild(fish5);
+
+        let schoolContainer = new PIXI.Container();
+        schoolContainer.addChild(fish3);
+        schoolContainer.addChild(fish4);
+        schoolContainer.addChild(fish5);
+        schoolContainer.x = 320;
+        schoolContainer.y = 240;
+        app.stage.addChild(schoolContainer);
+
+        //containers
+        let my_container = new PIXI.Container();
+        my_container.addChild(fish1);
+        my_container.addChild(fish2);
+        my_container.x = 320;
+        my_container.y = 240;
+
+        app.stage.addChild(my_container);
+
+
+        //Animate
+        let time = 0;
+        let schoolX = 1;
+        let schoolY = 1;
+
+        function animLoop() {
+            //let time = Date.now();
+
+            time += .25;
+            fish1.y -= Math.sin(time) * 4;
+            fish1.x -= Math.cos(time / 2) * 3;
+            fish1.rotation -= Math.cos(time - 1) * .01;
+
+            fish2.x += Math.cos(time / 4) * 10;
+            fish2.y -= Math.sin(time / 5) * 5;
+            fish2.scale.x = Math.cos(time / 4);
+
+            schoolContainer.x -= 2 * schoolX;
+            schoolContainer.scale.x = schoolX;
+
+            schoolContainer.y -= 1 * schoolY;
+
+            if (schoolContainer.x < 0 || schoolContainer.x > app.view.width) {
+                schoolX *= -1;
+            }
+
+            if (schoolContainer.y < 0 || schoolContainer.y > app.view.height) {
+                schoolY *= getRandomInt(-1.5, -.5);
+            }
+
+            fish3.rotation = Math.sin(time) * .05;
+            fish4.y -= Math.sin(time);
+            fish5.rotation = Math.sin(time - 2) * .025;
+            fish3.y -= Math.sin(time - 2);
+
+            bubbleColumn();
+            plantSway();
+            setTimeout(animLoop, 1000 / 30);
+        }
+
+        let bubbles = [];
+        let bubbleX = 250;
+        let bubbleY = 600;
+
+        for (let i = 1; i <= 6; i++) {
+            let tSprite = PIXI.Sprite.from(`img/bubbles/bubble-${Math.round(i / 2)}.png`);
+            bubbles.push(tSprite);
+            app.stage.addChild(tSprite);
+            tSprite.x = bubbleX;
+            tSprite.y = bubbleY;
+            tSprite.scale.set(.5);
+        }
+
+        let bubbleDelay = 0;
+        function bubbleColumn() {
+            if (time > bubbleDelay * 9) {
+                if (bubbleDelay < bubbles.length) {
+                    bubbleDelay++;
+                }
+            }
+
+            for (let i = 0; i < bubbleDelay; i++) {
+                let tSprite = bubbles[i];
+                tSprite.y -= 2.5 + Math.random();
+
+                tSprite.x -= Math.sin(time + i);
+
+                if (tSprite.y < -25) {
+                    tSprite.y = 600;
+                }
+            }
+        }
+
+        let plants = [];
+        for (let i = 1; i <= 6; i++) {
+            let tPlant = PIXI.Sprite.from(`img/plants/plant-${Math.round(i / 2)}.png`);
+            plants.push(tPlant);
+            tPlant.scale.set(1.25);
+            app.stage.addChild(tPlant);
+        }
+
+        for (let i = 0; i < plants.length; i++) {
+            plants[i].x = 500;
+            plants[i].y = 550;
+            plants[i].y -= (64 * 1.25) * i;
+        }
+
+        let plants2 = [];
+        for (let i = 1; i <= 5; i++) {
+            let tPlant = PIXI.Sprite.from(`img/plants/plant-${Math.round(i / 2)}.png`);
+            plants2.push(tPlant);
+            tPlant.scale.set(1.25);
+            app.stage.addChild(tPlant);
+        }
+
+        for (let i = 0; i < plants2.length; i++) {
+            plants2[i].x = 450;
+            plants2[i].y = 550;
+            plants2[i].y -= (64 * 1.25) * i;
+        }
+
+        function plantSway() {
+            for (let i = 0; i < plants.length; i++) {
+                plants[i].rotation = Math.sin(time) * .04;
+            }
+            for (let i = 0; i < plants2.length; i++) {
+                plants2[i].rotation = Math.sin(time - 1) * .045;
+            }
+        }
+
+        animLoop();
+
+        function getRandomInt(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+    </script>
+</body>
+
+</html>
