@@ -1,50 +1,50 @@
-//The App
-var app = new PIXI.Application({
-    width: 640,
-    height: 480,
-    backgroundColor: 0x000000
-});
-var stage = app.stage;
-var view = app.view;
+// //The App
+// var app = new PIXI.Application({
+//     width: 640,
+//     height: 480,
+//     backgroundColor: 0x000000
+// });
+// var stage = app.stage;
+// var view = app.view;
 
-//Add view to the document
-document.body.appendChild(app.view);
+// //Add view to the document
+// document.body.appendChild(app.view);
 
-//My first sprite
-let fish1 = PIXI.Sprite.from("img/lepomis-macrochirus.gif");
-fish1.x = 200;
-fish1.y = 200;
-fish1.angle = 0;
-fish1.tint = 0xFFFFFF;
-fish1.anchor.set(.5);
+// //My first sprite
+// let fish1 = PIXI.Sprite.from("img/lepomis-macrochirus.gif");
+// fish1.x = 200;
+// fish1.y = 200;
+// fish1.angle = 0;
+// fish1.tint = 0xFFFFFF;
+// fish1.anchor.set(.5);
 
-//Add it to the stage!
-stage.addChild(fish1);
+// //Add it to the stage!
+// stage.addChild(fish1);
 
-//My second sprite
-let fish2 = PIXI.Sprite.from("img/lepomis-gibbosus.png");
-fish1.anchor.set(.5);
-fish2.scale.set(.3);
-fish2.x = 300;
-fish2.y = 0;
+// //My second sprite
+// let fish2 = PIXI.Sprite.from("img/lepomis-gibbosus.png");
+// fish1.anchor.set(.5);
+// fish2.scale.set(.3);
+// fish2.x = 300;
+// fish2.y = 0;
 
-//Add it to the stage!
-app.stage.addChild(fish2);
+// //Add it to the stage!
+// app.stage.addChild(fish2);
 
 //Basic animation loop!
-function animationLoop() {
+// function animationLoop() {
 
-    let time = Date.now();
+//     let time = Date.now();
 
-    let wobble1 = Math.sin(time / 1000) * 20; //Period 1 second, from 20 to -20
-    let wobble2 = Math.sin(time / 700) * 10;  //Period 0.7 seconds, from 10 to -10
+//     let wobble1 = Math.sin(time / 1000) * 20; //Period 1 second, from 20 to -20
+//     let wobble2 = Math.sin(time / 700) * 10;  //Period 0.7 seconds, from 10 to -10
 
-    fish1.y = wobble1 + 200;              //Set them in the middle-ish of the stage
-    fish2.y = wobble2 + 300;
+//     fish1.y = wobble1 + 200;              //Set them in the middle-ish of the stage
+//     fish2.y = wobble2 + 300;
 
-    //setTimeout(animationLoop, 1000/30);   //We *should* be using requestAnimationFrame()
-    requestAnimationFrame(animationLoop);
-}
+//     //setTimeout(animationLoop, 1000/30);   //We *should* be using requestAnimationFrame()
+//     requestAnimationFrame(animationLoop);
+// }
 //animationLoop();
 
 /*
@@ -142,7 +142,7 @@ Animate.to = function (obj, end) {
 
             obj.scale.set(lerp(start.scale, end.scale, ease));
             obj.rotation = lerp(start.rotation, end.rotation, ease);
-            obj.tint = lerp(start.tint, end.tint, ease);
+            //obj.tint = lerp(start.tint, end.tint, ease);
             obj.alpha = lerp(start.alpha, end.alpha, ease);
 
             //Start the loop going!
@@ -161,12 +161,12 @@ Animate.to = function (obj, end) {
 
 };
 
-let moveAround = async () => {
-    Animate.from(fish1, { x: 0, y: 0 });
-    await Animate.to(fish1, { x: 0, y: 300, duration: 1000 });
-    await Animate.to(fish1, { x: 300, y: 0, duration: 1000 });
-    moveAround();
-};
+// let moveAround = async () => {
+//     Animate.from(fish1, { x: 0, y: 0 });
+//     await Animate.to(fish1, { x: 0, y: 300, duration: 1000 });
+//     await Animate.to(fish1, { x: 300, y: 0, duration: 1000 });
+//     moveAround();
+// };
 
 /*
 
@@ -354,35 +354,35 @@ async function wait3Seconds() {
 */
 
 
-async function idleSwim1() {
-    await Animate.to(fish1, {
-        x: 300, y: 320,
-        duration: 2000,
-        easing: Animate.easeInOut
-    });
-    await Animate.to(fish1, {
-        x: 300, y: 280,
-        duration: 2000,
-        easing: Animate.easeInOut
-    });
-    idleSwim1();
-}
-idleSwim1();
+// async function idleSwim1() {
+//     await Animate.to(fish1, {
+//         x: 300, y: 320,
+//         duration: 2000,
+//         easing: Animate.easeInOut
+//     });
+//     await Animate.to(fish1, {
+//         x: 300, y: 280,
+//         duration: 2000,
+//         easing: Animate.easeInOut
+//     });
+//     idleSwim1();
+// }
+// idleSwim1();
 
-async function idleSwim2() {
-    await Animate.to(fish2, {
-        x: 300, y: 30,
-        duration: 1200,
-        easing: Animate.easeInOut
-    });
-    await Animate.to(fish2, {
-        x: 300, y: 0,
-        duration: 1200,
-        easing: Animate.easeInOut
-    });
-    idleSwim2();
-}
-idleSwim2();
+// async function idleSwim2() {
+//     await Animate.to(fish2, {
+//         x: 300, y: 30,
+//         duration: 1200,
+//         easing: Animate.easeInOut
+//     });
+//     await Animate.to(fish2, {
+//         x: 300, y: 0,
+//         duration: 1200,
+//         easing: Animate.easeInOut
+//     });
+//     idleSwim2();
+// }
+// idleSwim2();
 
 
 /*

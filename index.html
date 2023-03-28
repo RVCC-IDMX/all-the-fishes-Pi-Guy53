@@ -16,6 +16,8 @@
     </header>
 
     <script src="button.js"></script>
+    <script src="animation.js"></script>
+
     <script>
 
         //The App
@@ -219,8 +221,23 @@
             return Math.random() * (max - min) + min;
         }
 
+        //Min-Max random function
+        function getRandom(min, max) {
+            return Math.random() * (max - min) + min;
+        }
 
-        // //BUTTONS =================================================
+        // Fishes 3
+        fish1.interactive = true;
+        fish1.on("pointertap", (e) => {
+            console.log("clicked");
+            fish1Move();
+        });
+
+        async function fish1Move() {
+            await Animate.to(fish1, { y: 100, duration: 2000 });
+        }
+
+        // Fishes 2 //BUTTONS =================================================
         // let colorButton = PIXI.Sprite.from("img/fish-2.png");
         // colorButton.x = 20;
         // colorButton.y = 500;
@@ -316,10 +333,10 @@
 
         // rotationSlider.label = sliderText;
 
-        //Min-Max random function
-        function getRandom(min, max) {
-            return Math.random() * (max - min) + min;
-        }
+        // //Min-Max random function
+        // function getRandom(min, max) {
+        //     return Math.random() * (max - min) + min;
+        // }
 
     </script>
 </body>
