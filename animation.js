@@ -87,12 +87,20 @@ Animate.to = function (obj, end) {
         //Just x and y to start
         var start = {
             x: obj.x,
-            y: obj.y
+            y: obj.y,
+            scale: obj.scale,
+            rotation: obj.rotation,
+            tint: obj.tint,
+            alpha: obj.alpha
         }
 
         //Set some defaults
         if (end.duration == undefined) end.duration = 0;
         if (end.easing == undefined) end.easing = Animate.linear;
+        if (end.scale == undefined) end.scale = obj.scale;
+        if (end.rotation == undefined) end.rotation = obj.rotation;
+        if (end.tint == undefined) end.tint = obj.tint;
+        if (end.alpha == undefined) end.alpha = obj.alpha;
 
         //We need to know when we've started animating
         var startTime = Date.now();
@@ -109,6 +117,12 @@ Animate.to = function (obj, end) {
             if (delta >= 1 || end.duration === 0) {
                 obj.x = end.x;
                 obj.y = end.y;
+
+                obj.scale.set(end.scale);
+                obj.rotation = end.rotation;
+                obj.tint = end.tint;
+                obj.alpha = end.alpha;
+
                 console.log("Done!");
 
                 resolve();
@@ -125,6 +139,11 @@ Animate.to = function (obj, end) {
 
             //Lerp our y coordinate
             obj.y = lerp(start.y, end.y, ease);
+
+            obj.scale.set(lerp(start.scale, end.scale, ease));
+            obj.rotation = lerp(start.rotation, end.rotation, ease);
+            obj.tint = lerp(start.tint, end.tint, ease);
+            obj.alpha = lerp(start.alpha, end.alpha, ease);
 
             //Start the loop going!
             obj.animationID = requestAnimationFrame(loop);

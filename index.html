@@ -221,100 +221,100 @@
 
 
         //BUTTONS =================================================
-        let colorButton = PIXI.Sprite.from("img/fish-2.png");
-        colorButton.x = 20;
-        colorButton.y = 500;
-        colorButton.width = 100;
-        colorButton.height = 100;
-        colorButton.dragging = false;
-        colorButton.interactive = true;
+        // let colorButton = PIXI.Sprite.from("img/fish-2.png");
+        // colorButton.x = 20;
+        // colorButton.y = 500;
+        // colorButton.width = 100;
+        // colorButton.height = 100;
+        // colorButton.dragging = false;
+        // colorButton.interactive = true;
 
-        let buttonText = new PIXI.Text('Change Color');
-        buttonText.anchor.set(-.25, -.5);
-        buttonText.x = colorButton.width / 2;
-        buttonText.y = colorButton.height / 2;
-        colorButton.addChild(buttonText);
+        // let buttonText = new PIXI.Text('Change Color');
+        // buttonText.anchor.set(-.25, -.5);
+        // buttonText.x = colorButton.width / 2;
+        // buttonText.y = colorButton.height / 2;
+        // colorButton.addChild(buttonText);
 
-        colorButton.label = buttonText;
+        // colorButton.label = buttonText;
 
-        //Event Listeners
-        //Click listener
-        colorButton.on("pointertap", (e) => {
-            //console.log(e);
-            let color = 0xFFFFFF * Math.random();
-            //buttonBody.tint = color;
-            changeColor();
-        });
-        //Hover listeners
-        colorButton.on("pointerover", function (e) {
-            colorButton.alpha = 0.7;
-        });
-        colorButton.on("pointerout", function (e) {
-            colorButton.alpha = 1.0;
-        });
+        // //Event Listeners
+        // //Click listener
+        // colorButton.on("pointertap", (e) => {
+        //     //console.log(e);
+        //     let color = 0xFFFFFF * Math.random();
+        //     //buttonBody.tint = color;
+        //     changeColor();
+        // });
+        // //Hover listeners
+        // colorButton.on("pointerover", function (e) {
+        //     colorButton.alpha = 0.7;
+        // });
+        // colorButton.on("pointerout", function (e) {
+        //     colorButton.alpha = 1.0;
+        // });
 
-        //colorButton.label.text = 'Change Color';
+        // //colorButton.label.text = 'Change Color';
 
-        app.stage.addChild(colorButton);
+        // app.stage.addChild(colorButton);
 
-        function changeColor() {
-            let r = Math.round(getRandom(0, 15));
-            let g = Math.round(getRandom(0, 15));
-            let b = Math.round(getRandom(0, 15));
-            let numStr = '0123456789abcdef';
+        // function changeColor() {
+        //     let r = Math.round(getRandom(0, 15));
+        //     let g = Math.round(getRandom(0, 15));
+        //     let b = Math.round(getRandom(0, 15));
+        //     let numStr = '0123456789abcdef';
 
-            r = numStr[r];
-            g = numStr[g];
-            b = numStr[b];
+        //     r = numStr[r];
+        //     g = numStr[g];
+        //     b = numStr[b];
 
-            let color = PIXI.utils.string2hex(`${r}${r}${g}${g}${b}${b}`);
+        //     let color = PIXI.utils.string2hex(`${r}${r}${g}${g}${b}${b}`);
 
-            fish2.tint = color;
-        }
+        //     fish2.tint = color;
+        // }
 
-        //Drag fish
-        let offsetX = 0;
-        let offsetY = 0;
-        fish1.interactive = true;
+        // //Drag fish
+        // let offsetX = 0;
+        // let offsetY = 0;
+        // fish1.interactive = true;
 
-        fish1.on("pointerdown", function (e) {
-            fish1.dragging = true;
-            offsetX = fish1.x - e.data.global.x;
-            offsetY = fish1.y - e.data.global.y;
-        });
+        // fish1.on("pointerdown", function (e) {
+        //     fish1.dragging = true;
+        //     offsetX = fish1.x - e.data.global.x;
+        //     offsetY = fish1.y - e.data.global.y;
+        // });
 
-        fish1.on("pointermove", function (e) {
-            //console.log(e);
-            if (fish1.dragging) {
-                //console.log(e);
-                fish1.x = e.data.global.x + offsetX;
-                fish1.y = e.data.global.y + offsetY;
-            }
-        });
+        // fish1.on("pointermove", function (e) {
+        //     //console.log(e);
+        //     if (fish1.dragging) {
+        //         //console.log(e);
+        //         fish1.x = e.data.global.x + offsetX;
+        //         fish1.y = e.data.global.y + offsetY;
+        //     }
+        // });
 
-        fish1.on("pointerup", function (e) {
-            fish1.dragging = false;
-        });
+        // fish1.on("pointerup", function (e) {
+        //     fish1.dragging = false;
+        // });
 
-        //Slider
-        let rotationSlider = makeSlider();
-        rotationSlider.x = 490;
-        rotationSlider.y = 560;
-        app.stage.addChild(rotationSlider);
+        // //Slider
+        // let rotationSlider = makeSlider();
+        // rotationSlider.x = 490;
+        // rotationSlider.y = 560;
+        // app.stage.addChild(rotationSlider);
 
-        rotationSlider.on("pointermove", function (e) {
-            schoolContainer.rotation = rotationSlider.value * 10;
-        });
+        // rotationSlider.on("pointermove", function (e) {
+        //     schoolContainer.rotation = rotationSlider.value * 10;
+        // });
 
-        let sliderText = new PIXI.Text('Rotation Slider');
-        sliderText.anchor.set(.5, .5);
-        sliderText.x = rotationSlider.width / 2;
-        sliderText.y = rotationSlider.height / 2;
-        sliderText.style.fill = 0xffffff;
+        // let sliderText = new PIXI.Text('Rotation Slider');
+        // sliderText.anchor.set(.5, .5);
+        // sliderText.x = rotationSlider.width / 2;
+        // sliderText.y = rotationSlider.height / 2;
+        // sliderText.style.fill = 0xffffff;
 
-        rotationSlider.addChild(sliderText);
+        // rotationSlider.addChild(sliderText);
 
-        rotationSlider.label = sliderText;
+        // rotationSlider.label = sliderText;
 
         //Min-Max random function
         function getRandom(min, max) {
