@@ -105,9 +105,9 @@
             //let time = Date.now();
 
             time += .25;
-            fish1.y -= Math.sin(time) * 4;
-            fish1.x -= Math.cos(time / 2) * 3;
-            fish1.rotation -= Math.cos(time - 1) * .01;
+            // fish1.y -= Math.sin(time) * 4;
+            // fish1.x -= Math.cos(time / 2) * 3;
+            // fish1.rotation -= Math.cos(time - 1) * .01;
 
             fish2.x += Math.cos(time / 4) * 10;
             fish2.y -= Math.sin(time / 5) * 5;
@@ -234,7 +234,7 @@
         });
 
         async function fish1Move() {
-            await Animate.to(fish1, {x : 0, y: 100, duration: 2000, tint: 0xff0000 });
+            await Animate.to(fish1, { y: 0, duration: 2000, tint:0xFF0000 });
         }
 
         // Fishes 2 //BUTTONS =================================================

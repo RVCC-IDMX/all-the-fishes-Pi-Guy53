@@ -88,13 +88,15 @@ Animate.to = function (obj, end) {
         var start = {
             x: obj.x,
             y: obj.y,
-            scale: obj.scale,
+            scale: obj.scale.x,
             rotation: obj.rotation,
             tint: obj.tint,
             alpha: obj.alpha
         }
 
         //Set some defaults
+        if (end.x == undefined) end.x = obj.x;
+        if (end.y == undefined) end.y = obj.y;
         if (end.duration == undefined) end.duration = 0;
         if (end.easing == undefined) end.easing = Animate.linear;
         if (end.scale == undefined) end.scale = obj.scale.x;
@@ -147,7 +149,7 @@ Animate.to = function (obj, end) {
 
             obj.alpha = lerp(start.alpha, end.alpha, ease); 
 
-            console.log(obj);
+            console.log(obj.x,obj.y,obj.tint,obj.alpha,obj.scale.x,obj.scale.y);
 
             //Start the loop going!
             obj.animationID = requestAnimationFrame(loop);
