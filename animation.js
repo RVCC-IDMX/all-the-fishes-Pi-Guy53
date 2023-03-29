@@ -149,7 +149,7 @@ Animate.to = function (obj, end) {
 
             obj.alpha = lerp(start.alpha, end.alpha, ease); 
 
-            console.log(obj.x,obj.y,obj.tint,obj.alpha,obj.scale.x,obj.scale.y);
+            //console.log(obj.x,obj.y,obj.tint,obj.alpha,obj.scale.x,obj.scale.y);
 
             //Start the loop going!
             obj.animationID = requestAnimationFrame(loop);

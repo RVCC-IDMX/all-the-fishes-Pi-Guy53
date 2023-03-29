@@ -228,14 +228,34 @@
 
         // Fishes 3
         fish1.interactive = true;
+
+        let fish1Bool = false;
+
         fish1.on("pointertap", (e) => {
             console.log("clicked");
+            Animate.stop(fish1);
+            fish1Bool = true;
             fish1Move();
         });
 
         async function fish1Move() {
-            await Animate.to(fish1, { y: 0, duration: 2000, tint:0xFF0000 });
+
+            if(fish1Bool)
+            {
+                await Animate.to(fish1, { y: 0, duration: 1000, rotation: 1.5 });
+                await Animate.to(fish1, { y: -250, duration: 2000, rotation: 0 });
+
+                fish1Bool = false;
+            }
+            else{
+               await Animate.to(fish1, { x : 200, y: 150, duration: 2000, rotation: .25 } );
+               await Animate.to(fish1, { x : 210, y: 100, duration: 2000, rotation: 0 } );
+            }
+
+            fish1Move();
         }
+
+        fish1Move();
 
         // Fishes 2 //BUTTONS =================================================
         // let colorButton = PIXI.Sprite.from("img/fish-2.png");
