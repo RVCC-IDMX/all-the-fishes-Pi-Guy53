@@ -87,6 +87,8 @@
         schoolContainer.y = 240;
         app.stage.addChild(schoolContainer);
 
+        let schoolCanMove = true;
+
         //containers
         let my_container = new PIXI.Container();
         my_container.addChild(fish1);
@@ -113,17 +115,22 @@
             fish2.y -= Math.sin(time / 5) * 5;
             fish2.scale.x = Math.cos(time / 4);
 
-            schoolContainer.x -= 2 * schoolX;
-            schoolContainer.scale.x = schoolX;
+            if (schoolCanMove) {
+                schoolContainer.x -= 2 * schoolX;
 
-            schoolContainer.y -= 1 * schoolY;
+                fish3.scale.x = Math.abs(fish3.scale.x) * schoolX;
+                fish4.scale.x = Math.abs(fish3.scale.x) * schoolX;
+                fish5.scale.x = Math.abs(fish3.scale.x) * schoolX;
 
-            if (schoolContainer.x < 0 || schoolContainer.x > app.view.width) {
-                schoolX *= -1;
-            }
+                schoolContainer.y -= 1 * schoolY;
 
-            if (schoolContainer.y < 0 || schoolContainer.y > app.view.height) {
-                schoolY *= getRandomInt(-1.5, -.5);
+                if (schoolContainer.x < 0 || schoolContainer.x > app.view.width) {
+                    schoolX *= -1;
+                }
+
+                if (schoolContainer.y < 0 || schoolContainer.y > app.view.height) {
+                    schoolY *= getRandomInt(-1.5, -.5);
+                }
             }
 
             fish3.rotation = Math.sin(time) * .05;
@@ -235,27 +242,78 @@
             console.log("clicked");
             Animate.stop(fish1);
             fish1Bool = true;
-            fish1Move();
+            fishMove();
         });
 
-        async function fish1Move() {
+        async function fishMove() {
 
-            if(fish1Bool)
-            {
+            if (fish1Bool) {
                 await Animate.to(fish1, { y: 0, duration: 1000, rotation: 1.5 });
                 await Animate.to(fish1, { y: -250, duration: 2000, rotation: 0 });
 
                 fish1Bool = false;
             }
-            else{
-               await Animate.to(fish1, { x : 200, y: 150, duration: 2000, rotation: .25 } );
-               await Animate.to(fish1, { x : 210, y: 100, duration: 2000, rotation: 0 } );
+            else {
+                await Animate.to(fish1, { x: 200, y: 150, duration: 2000, rotation: .25 });
+                await Animate.to(fish1, { x: 210, y: 100, duration: 2000, rotation: 0 });
             }
 
-            fish1Move();
+            fishMove();
         }
 
-        fish1Move();
+        fishMove();
+
+        //move to mouse click
+        app.stage.interactive = true;
+        app.stage.on("pointertap", (e) => {
+            let pos = e.data.global;
+            let orignPosX = schoolContainer.x;
+            let orignPosY = schoolContainer.y;
+            let originDir = fish3.scale.x;
+
+            moveSchool(pos, orignPosX, orignPosY, originDir);
+        });
+
+        //move the school
+        async function moveSchool(pos, oX, oY, oDire) {
+
+            //disable the default animation
+            schoolCanMove = false;
+
+            //get the distance between points
+            let a, b;
+            a = pos.x - oX;
+            b = pos.y - oY;
+
+            let time = Math.sqrt((a * a) + (b * b)) * 10;
+
+            //checks movement direction and reverses fish accordingly
+            //Could not use scale.x on the container itself, as it would flip upside down no matter what I did
+            if (a > 0) {
+                fish3.scale.x = Math.abs(fish3.scale.x) * -1;
+                fish4.scale.x = Math.abs(fish3.scale.x) * -1;
+                fish5.scale.x = Math.abs(fish3.scale.x) * -1;
+            }
+            else {
+                fish3.scale.x = Math.abs(fish3.scale.x) * 1;
+                fish4.scale.x = Math.abs(fish3.scale.x) * 1;
+                fish5.scale.x = Math.abs(fish3.scale.x) * 1;
+            }
+
+            //Animate a move to the new location, with travel time based on distance
+            await Animate.to(schoolContainer, { x: pos.x, y: pos.y, duration: time });
+
+            //flip the fish back the right way
+            fish3.scale.x = oDire;
+            fish4.scale.x = oDire;
+            fish5.scale.x = oDire;
+
+            //Animate a move back to the original position
+            await Animate.to(schoolContainer, { x: oX, y: oY, duration: time });
+
+            //re-enable the default animation
+            schoolCanMove = true;
+        }
 
         // Fishes 2 //BUTTONS =================================================
         // let colorButton = PIXI.Sprite.from("img/fish-2.png");
